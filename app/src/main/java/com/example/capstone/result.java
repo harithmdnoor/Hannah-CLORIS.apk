@@ -1,9 +1,10 @@
 package com.example.capstone;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.text.HtmlCompat;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -25,17 +25,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 public class result extends AppCompatActivity {
     TextToSpeech t1;
-    EditText ed1;
+    TextView ed1;
     ImageButton b1;
     TextView resultText;
     ImageButton backBtn;
     Button seeMoreBtn;
+
     private static final String TAG = "result";
 
 
@@ -45,14 +46,16 @@ public class result extends AppCompatActivity {
         new NukeSSLCerts().nuke();
 
         setContentView(R.layout.activity_result);
-        ed1 = findViewById(R.id.ed1);
-        b1 = findViewById(R.id.b1);
-        resultText = findViewById(R.id.resultText);
-        backBtn = findViewById(R.id.backBtn);
+        ed1 = findViewById(R.id.purposeTitle);
+        b1 = findViewById(R.id.analogyTTS);
+        resultText = findViewById(R.id.analogyResultText);
+        backBtn = findViewById(R.id.analogyBackBtn);
         seeMoreBtn = findViewById(R.id.seeMoreBtn);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences.Editor editor = pref.edit();
 
-        final ArrayList<String> data1 = new ArrayList<String>();
-        final ArrayList<String> data2 = new ArrayList<String>();
+        final ArrayList<String> key = new ArrayList<String>();
+        final ArrayList<String> value = new ArrayList<String>();
 
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -64,9 +67,10 @@ public class result extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        Bundle bundle = getIntent().getExtras();
-        final String query = bundle.getString("query");
-        final String url = String.format("https://hannah-cloris.com/?Category=&ConceptName=%s", query);
+        String tempString = pref.getString("query",null);
+        final String query = tempString.substring(0, 1).toUpperCase() + tempString.substring(1).toLowerCase();
+
+        final String url = String.format("https://hannah-cloris.azurewebsites.net/api/Concepts");
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -74,48 +78,58 @@ public class result extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            for (int i=0; i<jsonArray.length();i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                if ((object.get("name").toString().toUpperCase()).contains(query.toUpperCase())) {
+                                    ed1.setText(HtmlCompat.fromHtml(object.getString("name"), HtmlCompat.FROM_HTML_MODE_LEGACY));
+                                    Log.d(TAG, "onResponse: " + object.toString());
+                                    key.add("Name");
+                                    key.add("Description");
+                                    key.add("Purpose");
+                                    key.add("Analogy");
+                                    key.add("How It Works");
+                                    key.add("Links");
 
-                            Document doc = Jsoup.parse(response);
-                            Element x = doc;
-                            ed1.setText(query);
-                            resultText.setText(x.select("dd").get(1).text());
+                                    value.add(object.getString("name"));
+                                    value.add(object.getString("description"));
+                                    value.add(object.getString("purpose"));
+                                    value.add(object.getString("analogy"));
+                                    value.add(object.getString("howItWorks"));
+                                    value.add(object.getString("links"));
 
-                            data1.add(x.select("dd").get(2).text());
-                            data1.add(x.select("dd").get(3).text());
-                            data1.add(x.select("dd").get(4).text());
+                                    resultText.setText(HtmlCompat.fromHtml(object.getString("description"), HtmlCompat.FROM_HTML_MODE_LEGACY));
 
-
-                            data2.add(x.select("dt").get(2).text());
-                            data2.add(x.select("dt").get(3).text());
-                            data2.add(x.select("dt").get(4).text());
-
-                            if(resultText.getText() == null){
-                                seeMoreBtn.setVisibility(View.GONE);
-                            }
-                            else {
-                                seeMoreBtn.setVisibility(View.VISIBLE);
-                            }
-                            Log.e(TAG, x.select("dt").get(2).text());
-                            Log.e(TAG, x.select("dd").get(2).text());
-                            Log.e(TAG, x.select("dd").get(3).text());
-                            Log.e(TAG, x.select("dd").get(4).text());
+                                    seeMoreBtn.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
 
 
-                            seeMoreBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent i = new Intent (result.this, Links.class);
-                                    i.putExtra("name", query);
-                                    i.putExtra("definition",resultText.getText());
-                                    i.putExtra("data1",data1);
-                                    i.putExtra("data2",data2);
-                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                    startActivity(browserIntent);
+                                            editor.putString("name",value.get(0));
+                                            editor.putString("description",value.get(1));
+                                            editor.putString("purpose",value.get(2));
+                                            editor.putString("analogy",value.get(3));
+                                            editor.putString("howItWorks",value.get(4));
+                                            editor.putString("links",value.get(5));
+                                            editor.commit();
+                                            Intent i = new Intent (result.this, Links.class);
+                                            startActivity(i);
+                                        }
+                                    });
+                                    if(resultText.getText() == null){
+                                        seeMoreBtn.setVisibility(View.GONE);
+                                    }
+                                    else {
+                                        seeMoreBtn.setVisibility(View.VISIBLE);
+                                    }
                                 }
-                            });
+//                                else{
+//                                    ed1.setText("Concept not found");
+//                                    resultText.setText("Concept not found");
+//                                    seeMoreBtn.setVisibility(View.GONE);
+//                                }
 
-
-
+                            }
                         }catch (Exception exception){
                             ed1.setText(query);
                             resultText.setText(String.format("Concept \"%s\" not found", query));
@@ -152,6 +166,9 @@ public class result extends AppCompatActivity {
             }
         });
 
+    }
+    public static String html2text(String html) {
+        return Jsoup.parse(html).text();
     }
     @Override
     public void onBackPressed() {

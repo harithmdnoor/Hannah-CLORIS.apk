@@ -9,10 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Links" android:screenOrientation="portrait"></activity>
-        <activity android:name=".test" android:screenOrientation="portrait" />
-        <activity android:name=".result" android:screenOrientation="portrait" />
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".conceptLinks"></activity>
+        <activity android:name=".HowItWorks" />
+        <activity android:name=".Analogy" />
+        <activity android:name=".Purpose" />
+        <activity
+            android:name=".Links"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".test"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".result"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

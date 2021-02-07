@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".result"
+    tools:context=".Purpose"
     android:background="@color/primary">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/purposeTitle"
                 android:layout_width="172dp"
                 android:layout_height="50dp"
@@ -29,12 +29,13 @@
                 android:gravity="center"
                 android:text="Fetching..."
                 android:textColor="@color/black"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/analogyTTS"
-                app:layout_constraintStart_toEndOf="@+id/analogyBackBtn" />
+                app:layout_constraintEnd_toStartOf="@+id/purposeTTS"
+                app:layout_constraintStart_toEndOf="@+id/purposeBackBtn" />
 
             <ImageButton
-                android:id="@+id/analogyBackBtn"
+                android:id="@+id/purposeBackBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="40dp"
@@ -45,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageButton
-                android:id="@+id/analogyTTS"
+                android:id="@+id/purposeTTS"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
@@ -61,13 +62,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <Button
-                android:id="@+id/purposeText"
+            <TextView
+                android:id="@+id/purposeResultText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="45dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/border15"
                 android:elevation="5dp"
@@ -75,60 +75,9 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/analogyText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="150dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/border15"
-                android:elevation="5dp"
-                android:paddingVertical="25dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/howItWorksText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="250dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/border15"
-                android:elevation="5dp"
-                android:paddingVertical="25dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/linksText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="350dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/border15"
-                android:elevation="5dp"
-                android:paddingVertical="25dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

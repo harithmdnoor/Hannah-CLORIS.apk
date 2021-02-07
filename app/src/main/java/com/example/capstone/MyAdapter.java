@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
-    ArrayList<String> data1 = new ArrayList<String>();
-    ArrayList<String> data2 = new ArrayList<String>();
+    ArrayList<String> key = new ArrayList<String>();
+    ArrayList<String> value = new ArrayList<String>();
     onClickListener onClickListener;
 
     Context context;
@@ -21,8 +21,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     public MyAdapter(Context ct, ArrayList<String> name, ArrayList<String> link, onClickListener onClickListener){
 
     context = ct;
-        data1 = link;
-        data2 = name;
+        key = link;
+        value = name;
         this.onClickListener = onClickListener;
 
     }
@@ -39,15 +39,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.myText1.setText(data1.get(position));
-        holder.myText2.setText(data2.get(position));
+        holder.myText1.setText(key.get(position));
+        holder.myText2.setText(value.get(position));
 
 
     }
 
     @Override
     public int getItemCount() {
-        return data1.size();
+        return key.size();
     }
 
     public interface onClickListener{

@@ -1,4 +1,4 @@
-package com.example.capstone;
+    package com.example.capstone;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResults(Bundle bundle) {
-                micButton.setImageResource(R.drawable.ic_baseline_mic_off_24);
+                micButton.setImageResource(R.drawable.ic_baseline_mic_24);
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 editText.setText(data.get(0));
                 Intent i = new Intent (MainActivity.this, result.class);
@@ -105,17 +106,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         micButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP){
                     speechRecognizer.stopListening();
                     micButton.setImageResource(R.drawable.ic_baseline_mic_off_24);
+
                 }
-//                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-//                    micButton.setImageResource(R.drawable.ic_baseline_mic_off_24);
-//                    speechRecognizer.startListening(speechRecognizerIntent);
-//                }
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                    micButton.setImageResource(R.drawable.ic_baseline_mic_24);
+                    speechRecognizer.startListening(speechRecognizerIntent);
+                }
                 return false;
             }
         });
@@ -124,12 +127,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent (MainActivity.this, result.class);
-                i.putExtra("query", editText.getText().toString());
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("query",editText.getText().toString());
+                editor.commit();
                 startActivity(i);
             }
         });
-        micButton.setImageResource(R.drawable.ic_baseline_mic_24);
-        speechRecognizer.startListening(speechRecognizerIntent);
+
 
 
 
