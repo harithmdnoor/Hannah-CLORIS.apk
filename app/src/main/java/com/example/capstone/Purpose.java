@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class Purpose extends AppCompatActivity {
     ImageButton backBtn;
     TextView ed1;
     ImageButton b1;
-    TextView resultText;
+    WebView resultText;
     private static final String TAG = "Purpose";
 
 
@@ -33,11 +34,11 @@ public class Purpose extends AppCompatActivity {
         b1 = findViewById(R.id.purposeTTS);
         resultText = findViewById(R.id.purposeResultText);
         backBtn = findViewById(R.id.purposeBackBtn);
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
 
 
-        ed1.setText(HtmlCompat.fromHtml(pref.getString("name",null), HtmlCompat.FROM_HTML_MODE_LEGACY));
-        resultText.setText(HtmlCompat.fromHtml(pref.getString("purpose",null), HtmlCompat.FROM_HTML_MODE_LEGACY));
+        ed1.setText("Purpose");
+        resultText.loadData(pref.getString("purpose",null),"text/html", "UTF-8");
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -49,7 +50,7 @@ public class Purpose extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String toSpeak = resultText.getText().toString();
+                String toSpeak = html2text(pref.getString("purpose",null));
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
             }
         });

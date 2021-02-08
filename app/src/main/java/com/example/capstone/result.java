@@ -111,6 +111,7 @@ public class result extends AppCompatActivity {
                                             editor.putString("analogy",value.get(3));
                                             editor.putString("howItWorks",value.get(4));
                                             editor.putString("links",value.get(5));
+                                            Log.e(TAG, value.get(5) );
                                             editor.commit();
                                             Intent i = new Intent (result.this, Links.class);
                                             startActivity(i);

@@ -37,14 +37,10 @@ public class HowItWorks extends AppCompatActivity {
         resultText = findViewById(R.id.howItWorksResultText);
         backBtn = findViewById(R.id.howItWorksBackBtn);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-        Document doc = Jsoup.parse(pref.getString("howItWorks",null));
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
 
-        String castsImageUrl = doc.attr("img");
 
-        Log.d(TAG, "onCreate: "+castsImageUrl.toString());
-
-        ed1.setText(html2text(pref.getString("name",null)));
+        ed1.setText("How It Works");
         Log.e(TAG, pref.getString("howItWorks",null) );
         resultText.loadData(pref.getString("howItWorks",null),"text/html", "UTF-8");
 //        resultText.setText(HtmlCompat.fromHtml(pref.getString("howItWorks",null), HtmlCompat.FROM_HTML_MODE_LEGACY));
@@ -57,13 +53,13 @@ public class HowItWorks extends AppCompatActivity {
                 }
             }
         });
-//        b1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String toSpeak = resultText.getText().toString();
-//                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-//            }
-//        });
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String toSpeak = html2text(pref.getString("howItWorks",null));
+                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

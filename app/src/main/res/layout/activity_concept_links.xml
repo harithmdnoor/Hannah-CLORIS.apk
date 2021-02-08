@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="120dp">
 
-            <EditText
-                android:id="@+id/purposeTitle"
+            <TextView
+                android:id="@+id/conceptLinksTitle"
                 android:layout_width="172dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
@@ -31,11 +31,11 @@
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/analogyTTS"
-                app:layout_constraintStart_toEndOf="@+id/analogyBackBtn" />
+                app:layout_constraintEnd_toStartOf="@+id/conceptLinksTTS"
+                app:layout_constraintStart_toEndOf="@+id/conceptLinksBackBtn" />
 
             <ImageButton
-                android:id="@+id/analogyBackBtn"
+                android:id="@+id/conceptLinksBackBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="40dp"
@@ -46,7 +46,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageButton
-                android:id="@+id/analogyTTS"
+                android:id="@+id/conceptLinksTTS"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginEnd="40dp"
@@ -63,7 +63,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/analogyResultText"
+                android:id="@+id/conceptLinksText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"

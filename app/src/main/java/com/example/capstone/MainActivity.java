@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -90,8 +91,11 @@ public class MainActivity extends AppCompatActivity {
                 micButton.setImageResource(R.drawable.ic_baseline_mic_24);
                 ArrayList<String> data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 editText.setText(data.get(0));
-                Intent i = new Intent (MainActivity.this, result.class);
-                i.putExtra("query", data.get(0));
+                Intent i = new Intent(MainActivity.this, result.class);
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("query", data.get(0));
+                editor.commit();
                 startActivity(i);
             }
 
@@ -126,12 +130,23 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent (MainActivity.this, result.class);
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("query",editText.getText().toString());
-                editor.commit();
-                startActivity(i);
+                if ((editText.getText().toString()).matches("") ) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Please input a concept";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+                else{
+
+                    Intent i = new Intent(MainActivity.this, result.class);
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("query", editText.getText().toString());
+                    editor.commit();
+                    startActivity(i);
+                }
             }
         });
 

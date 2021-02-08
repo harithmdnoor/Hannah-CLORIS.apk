@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class Analogy extends AppCompatActivity {
     ImageButton backBtn;
     TextView ed1;
     ImageButton b1;
-    TextView resultText;
+    WebView resultText;
     private static final String TAG = "Analogy";
 
     @Override
@@ -33,11 +34,11 @@ public class Analogy extends AppCompatActivity {
         resultText = findViewById(R.id.analogyResultText);
         backBtn = findViewById(R.id.analogyBackBtn);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
 
 
-        ed1.setText(html2text(pref.getString("name",null)));
-        resultText.setText(html2text(pref.getString("analogy",null)));
+        ed1.setText("Analogy");
+        resultText.loadData(pref.getString("analogy",null),"text/html", "UTF-8");
         t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -49,7 +50,7 @@ public class Analogy extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String toSpeak = resultText.getText().toString();
+                String toSpeak = html2text(pref.getString("analogy",null));
                 t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
