@@ -1,4 +1,4 @@
-## Hannah-CLORIS Android 
+## Hannah-CLORIS Android by harithmdnoor 👨‍💻
 Libraries used:
 1) Volley
 2) JSOUP
