@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -39,7 +41,34 @@ public class Analogy extends AppCompatActivity {
 
         ed1.setText("Analogy");
         resultText.loadData(pref.getString("analogy",null),"text/html", "UTF-8");
-        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+        resultText.setHorizontalScrollBarEnabled(false);
+        resultText.setOnTouchListener(new View.OnTouchListener() {
+            float m_downX;
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getPointerCount() > 1) {
+                    //Multi touch detected
+                    return true;
+                }
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        // save the x
+                        m_downX = event.getX();
+                        break;
+                    }
+                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP: {
+                        // set x so that it doesn't move
+                        event.setLocation(m_downX, event.getY());
+                        break;
+                    }
+
+                }
+                return false;
+            }
+        });        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 if(status != TextToSpeech.ERROR) {

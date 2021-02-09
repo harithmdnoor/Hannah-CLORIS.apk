@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".result"
-    android:background="@color/primary">
+    android:background="@color/black">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -22,7 +22,6 @@
                 android:layout_width="172dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/border15"
                 android:elevation="5dp"
@@ -30,7 +29,6 @@
                 android:text="Fetching..."
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/analogyTTS"
                 app:layout_constraintStart_toEndOf="@+id/analogyBackBtn" />
 
             <ImageButton
@@ -40,20 +38,10 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="20dp"
                 android:background="@null"
+                android:tint="@color/purple"
                 android:src="@drawable/ic_baseline_arrow_back_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageButton
-                android:id="@+id/analogyTTS"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="20dp"
-                android:background="@null"
-                android:src="@drawable/ic_baseline_volume_up_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

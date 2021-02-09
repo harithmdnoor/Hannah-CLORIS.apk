@@ -81,7 +81,7 @@ public class result extends AppCompatActivity {
                             JSONArray jsonArray = new JSONArray(response);
                             for (int i=0; i<jsonArray.length();i++) {
                                 JSONObject object = jsonArray.getJSONObject(i);
-                                if ((object.get("name").toString().toUpperCase()).contains(query.toUpperCase())) {
+                                if ((object.get("name").toString().toUpperCase()).equals(query.toUpperCase())) {
                                     ed1.setText(HtmlCompat.fromHtml(object.getString("name"), HtmlCompat.FROM_HTML_MODE_LEGACY));
                                     Log.d(TAG, "onResponse: " + object.toString());
                                     key.add("Name");
@@ -124,11 +124,11 @@ public class result extends AppCompatActivity {
                                         seeMoreBtn.setVisibility(View.VISIBLE);
                                     }
                                 }
-//                                else{
-//                                    ed1.setText("Concept not found");
-//                                    resultText.setText("Concept not found");
-//                                    seeMoreBtn.setVisibility(View.GONE);
-//                                }
+                                else{
+                                    ed1.setText("Concept not found");
+                                    resultText.setText("Concept not found");
+                                    seeMoreBtn.setVisibility(View.GONE);
+                                }
 
                             }
                         }catch (Exception exception){

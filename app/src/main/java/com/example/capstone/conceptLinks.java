@@ -23,8 +23,8 @@ import java.util.Locale;
 
 public class conceptLinks extends AppCompatActivity  {
     TextView ed1;
-    TextToSpeech t1;
-    ImageButton b1;
+//    TextToSpeech t1;
+//    ImageButton b1;
     ImageButton backBtn;
     TextView resultText;
 
@@ -34,7 +34,7 @@ public class conceptLinks extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concept_links);
         ed1 = findViewById(R.id.conceptLinksTitle);
-        b1 = findViewById(R.id.conceptLinksTTS);
+//        b1 = findViewById(R.id.conceptLinksTTS);
         backBtn = findViewById(R.id.conceptLinksBackBtn);
         resultText =findViewById(R.id.conceptLinksText);
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
@@ -43,21 +43,21 @@ public class conceptLinks extends AppCompatActivity  {
         ed1.setText("Links");
 //        resultText.loadData(pref.getString("links",null),"text/html; charset=utf-8", "utf-8");
         resultText.setText((HtmlCompat.fromHtml(pref.getString("links",null), HtmlCompat.FROM_HTML_MODE_LEGACY)));
-        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.UK);
-                }
-            }
-        });
-        b1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String toSpeak = html2text(pref.getString("links",null));
-                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-            }
-        });
+//        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int status) {
+//                if(status != TextToSpeech.ERROR) {
+//                    t1.setLanguage(Locale.UK);
+//                }
+//            }
+//        });
+//        b1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String toSpeak = html2text(pref.getString("links",null));
+//                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+//            }
+//        });
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
